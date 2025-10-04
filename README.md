@@ -173,5 +173,7 @@ After the workflow completes successfully, your application will be deployed and
 
 <img src="/Screenshots/app2.png" alt="Alt Text" width="500" height="500">
 
+If you don't want run pipeline on every push to main branch, you can add ""[skip ci]"" in your commit message. This will prevent the GitHub Actions workflow from being triggered for that specific commit.
+
 ## Summary
 This project provides a comprehensive example of deploying a containerized Python Flask application on AWS ECS using Fargate. It covers everything from Dockerization to infrastructure provisioning with AWS CDK, and CI/CD automation with GitHub Actions. You can further enhance this project by adding features like HTTPS, database integration, and advanced deployment strategies.
