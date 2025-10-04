@@ -16,6 +16,7 @@ def home():
         <ul>
             <li><a href='/about'>About</a></li>
             <li><a href='/health'>Health Check</a></li>
+            <li><a href='/api/data'>API Endpoints</a></li>
         </ul>
     """)
 

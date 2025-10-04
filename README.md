@@ -110,8 +110,8 @@ cdk destroy
     ```
 
 - Running image in localhost:  
-  <img src="/Screenshots/local_cmd.png" alt="Alt Text" width="300" height="200">
-  <img src="/Screenshots/local_app.png" alt="Alt Text" width="300" height="200">
+  <img src="/Screenshots/local_cmd.png" alt="Alt Text" width="500" height="500">
+  <img src="/Screenshots/local_app.png" alt="Alt Text" width="500" height="500">
 
 - Pushing image to DockerHub: Optional step if you want to keep a backup copy of your image.
     ```bash
@@ -132,23 +132,23 @@ cdk destroy
     docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/python_flask:latest
     ```
 - CDK deploy:  
-<img src="/Screenshots/image.png" alt="Alt Text" width="300" height="200">
+<img src="/Screenshots/image.png" alt="Alt Text" width="500" height="500">
 You can use the image stored in ECR or DockerHub in your CDK stack. Make sure to update the image URL in `cdk_stack.py` accordingly.
     ```bash
     cdk bootstrap
     cdk deploy
     ```
-    <img src="/Screenshots/cdk.png" alt="Alt Text" width="300" height="200">
+    <img src="/Screenshots/cdk.png" alt="Alt Text" width="500" height="500">
 
 - Accessing the application using Load Balancer DNS:  
-    <img src="/Screenshots/lb_app.png" alt="Alt Text" width="300" height="200">
+    <img src="/Screenshots/lb_app.png" alt="Alt Text" width="500" height="500">
 
 - Monitore the application using CloudWatch:  
-    <img src="/Screenshots/cloudWatch.png" alt="Alt Text" width="300" height="200">
+    <img src="/Screenshots/cloudWatch.png" alt="Alt Text" width="500" height="500">
 
 - CI/CD using GitHub Actions:
 The GitHub Actions workflow will automatically build and push the Docker image to DockerHub and ECR, and deploy the updated ECS Fargate service using AWS CDK on every push to the `main` branch.
-    <img src="/Screenshots/app2.png" alt="Alt Text" width="300" height="200">
+    <img src="/Screenshots/app2.png" alt="Alt Text" width="500" height="500">
 
 Make sure to set the following secrets in your GitHub repository:
   - `AWS_ACCESS_KEY_ID`
@@ -165,7 +165,7 @@ Workflow:
   - `deploy`: Deploys the ECS Fargate service using AWS CDK.
 - Ensure that the image URL in `cdk_stack.py` matches the image you pushed to DockerHub or ECR.
 In Github, navigate to the `Actions` tab to monitor the workflow runs and check for any errors or issues.
-<img src="/Screenshots/git.png" alt="Alt Text" width="300" height="200">
+<img src="/Screenshots/git.png" alt="Alt Text" width="500" height="500">
 
 ## Summary
 This project provides a comprehensive example of deploying a containerized Python Flask application on AWS ECS using Fargate. It covers everything from Dockerization to infrastructure provisioning with AWS CDK, and CI/CD automation with GitHub Actions. You can further enhance this project by adding features like HTTPS, database integration, and advanced deployment strategies.
