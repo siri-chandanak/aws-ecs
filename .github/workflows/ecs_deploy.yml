@@ -22,12 +22,20 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 3. Log in to Amazon ECR (optional backup)
+      # 3. Configure AWS Credentials (before ECR login!)
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1 
+
+      # 4. Log in to Amazon ECR (optional backup)
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      # 4. Build & Push Docker Image
+      # 5. Build & Push Docker Image
       - name: Build and Push Docker Images
         run: |
           DOCKERHUB_IMAGE=${{ secrets.DOCKERHUB_USERNAME }}/python_flask
@@ -46,15 +54,6 @@ jobs:
           # Push to ECR (backup only)
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-
-
-      # 5. Configure AWS Credentials
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1   # change region if needed
 
       # 6. Install Node.js & AWS CDK
       - name: Install Node.js & AWS CDK
