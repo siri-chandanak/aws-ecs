@@ -22,33 +22,49 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 3. Build & Push Docker Image
-      - name: Build and Push Docker Image
-        run: |
-          IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/ecs-fargate-app
-          VERSION=${{ github.sha }}
-          docker build -t $IMAGE_NAME:$VERSION -t $IMAGE_NAME:latest .
-          docker push $IMAGE_NAME:$VERSION
-          docker push $IMAGE_NAME:latest
-          echo "IMAGE_TAG=$VERSION" >> $GITHUB_ENV
+      # 3. Log in to Amazon ECR (optional backup)
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
 
-      # 4. Configure AWS Credentials
+      # 4. Build & Push Docker Image
+      - name: Build and Push Docker Images
+        run: |
+          DOCKERHUB_IMAGE=${{ secrets.DOCKERHUB_USERNAME }}/python_flask
+          ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY=python_flask
+          VERSION=${{ github.sha }}
+
+          # Build image with both registries
+          docker build -t $DOCKERHUB_IMAGE:$VERSION -t $DOCKERHUB_IMAGE:latest \
+                       -t $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+
+          # Push to DockerHub (primary)
+          docker push $DOCKERHUB_IMAGE:$VERSION
+          docker push $DOCKERHUB_IMAGE:latest
+
+          # Push to ECR (backup only)
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+
+      # 5. Configure AWS Credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1   # <-- Change to your AWS region if needed
+          aws-region: us-east-1   # change region if needed
 
-      # 5. Install Node.js (if not installed) and CDK CLI
+      # 6. Install Node.js & AWS CDK
       - name: Install Node.js & AWS CDK
         run: |
           sudo apt-get update
           sudo apt-get install -y nodejs npm
           npm install -g aws-cdk
 
-      # 6. Deploy using CDK
+      # 7. Deploy using CDK
       - name: CDK Deploy
         run: |
           pip install --user -r requirements.txt
-          cdk deploy --app "python app.py" --require-approval never
+          cdk deploy --app "python cdk_app.py" --require-approval never

@@ -25,10 +25,10 @@ class EcsFargateStack(Stack):
             desired_count=2,
             #task_image_options=ecs_patterns.ApplicationLoadBalancedTaskImageOptions(
             #    image=ecs.ContainerImage.from_registry(
-            #        "079910999118.dkr.ecr.us-east-1.amazonaws.com/ecs-fargate-app:v0.1"
+            #        "079910999118.dkr.ecr.us-east-1.amazonaws.com/python_flask:v0.1"
             task_image_options=ecs_patterns.ApplicationLoadBalancedTaskImageOptions(
                 image=ecs.ContainerImage.from_registry(
-                    "siri019/ecs-fargate-app:v0.1"
+                    "siri019/python_flask:v0.1"
                 ),
                 container_port=5000,
                 enable_logging=True,
