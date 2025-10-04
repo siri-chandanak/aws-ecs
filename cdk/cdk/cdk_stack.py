@@ -34,7 +34,7 @@ class EcsFargateStack(Stack):
                 container_port=5000,
                 enable_logging=True,
                 environment={
-                    "FORCE_REDEPLOY": datetime.datetime.now().isoformat()
+                    "FORCE_REDEPLOY": datetime.now().isoformat()
                 },
             ),
             public_load_balancer=True
