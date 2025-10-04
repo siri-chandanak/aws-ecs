@@ -138,17 +138,17 @@ You can use the image stored in ECR or DockerHub in your CDK stack. Make sure to
     cdk bootstrap
     cdk deploy
     ```
-    <img src="/Screenshots/cdk.png" alt="Alt Text" width="500" height="500">
+<img src="/Screenshots/cdk.png" alt="Alt Text" width="500" height="500">
 
 - Accessing the application using Load Balancer DNS:  
-    <img src="/Screenshots/lb_app.png" alt="Alt Text" width="500" height="500">
+<img src="/Screenshots/lb_app.png" alt="Alt Text" width="500" height="500">
 
 - Monitore the application using CloudWatch:  
-    <img src="/Screenshots/cloudWatch.png" alt="Alt Text" width="500" height="500">
+<img src="/Screenshots/cloudWatch.png" alt="Alt Text" width="500" height="500">
 
 - CI/CD using GitHub Actions:
 The GitHub Actions workflow will automatically build and push the Docker image to DockerHub and ECR, and deploy the updated ECS Fargate service using AWS CDK on every push to the `main` branch.
-    <img src="/Screenshots/app2.png" alt="Alt Text" width="500" height="500">
+<img src="/Screenshots/app2.png" alt="Alt Text" width="500" height="500">
 
 Make sure to set the following secrets in your GitHub repository:
   - `AWS_ACCESS_KEY_ID`
