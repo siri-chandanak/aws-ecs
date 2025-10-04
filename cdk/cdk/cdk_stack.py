@@ -1,3 +1,4 @@
+from datetime import datetime
 from aws_cdk import (
     Stack,
     aws_ec2 as ec2,
@@ -25,13 +26,16 @@ class EcsFargateStack(Stack):
             desired_count=2,
             #task_image_options=ecs_patterns.ApplicationLoadBalancedTaskImageOptions(
             #    image=ecs.ContainerImage.from_registry(
-            #        "079910999118.dkr.ecr.us-east-1.amazonaws.com/python_flask:v0.1"
+            #        "079910999118.dkr.ecr.us-east-1.amazonaws.com/python_flask:latest"
             task_image_options=ecs_patterns.ApplicationLoadBalancedTaskImageOptions(
                 image=ecs.ContainerImage.from_registry(
                     "siri019/python_flask:latest"
                 ),
                 container_port=5000,
                 enable_logging=True,
+                environment={
+                    "FORCE_REDEPLOY": datetime.datetime.now().isoformat()
+                },
             ),
             public_load_balancer=True
         )
