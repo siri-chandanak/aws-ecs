@@ -66,5 +66,4 @@ jobs:
       - name: CDK Deploy
         run: |
           pip install --user -r requirements.txt
-          cdk deploy --app "python app.py" --require-approval never
-
+          cdk deploy --app "python cdk/app.py" --require-approval never
